@@ -17,15 +17,15 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', {
 /*     db.collection('Todos').deleteMany({text: 'Eat lunch'}).then((res) => {
         console.log(res)
     }); */
-
+/* 
     db.collection('Users').deleteMany({name: 'Braedon'}).then((res => {
         console.log(res.result)
-    }))
-    db.collection('Users').findOneAndDelete({
+    })) */
+/*     db.collection('Users').findOneAndDelete({
         _id: new ObjectID("5b7aebbe4c9a74d6fbc85acd")
     }).then((res => {
         console.log(res)
-    }))
+    })) */
 
     //deleteOne
 /*     db.collection('Todos').deleteOne({text: 'Eat lunch'}).then((res) => {
