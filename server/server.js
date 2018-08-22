@@ -29,8 +29,12 @@ app.get('/todos', (req, res) => {
     })
 })
 
+app.get('/todos:id', (req, res) => {
+    res.send(req.params)
+})
+
 app.listen(3000, () => {
-    console.log('Stared on http://localhost:3000/')
+    console.log('Started on http://localhost:3000/')
 })
 
 module.exports = {
