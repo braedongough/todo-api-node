@@ -15,7 +15,7 @@ const {
 } = require('./models/user')
 
 const app = express()
-const port = process.env.PORT || 300
+const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 
@@ -30,6 +30,8 @@ app.post('/todos', (req, res) => {
         res.status(400).send(e)
     })
 })
+
+mongoose.set('useFindAndModify', false)
 
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
@@ -50,6 +52,23 @@ app.get('/todos/:id', (req, res) => {
 
     //findById
     Todo.findById(id).then((todo) => {
+        if(!todo) {
+            res.status(404).send()
+        }
+        res.send({todo})
+    }).catch((e) => {
+        res.status(400).send()
+    })
+})
+
+app.delete('/todos/:id', (req, res) => {
+    const id = req.params.id
+
+    if (!ObjectID.isValid(id)) {
+        return res.status(404).send()
+    }
+
+    Todo.findByIdAndRemove(id).then((todo) => {
         if(!todo) {
             res.status(404).send()
         }
