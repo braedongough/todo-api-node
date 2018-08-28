@@ -20,6 +20,8 @@ const {
 const app = express()
 const port = process.env.PORT
 
+mongoose.set('useFindAndModify', false)
+
 app.use(bodyParser.json())
 
 app.post('/todos', (req, res) => {
@@ -33,8 +35,6 @@ app.post('/todos', (req, res) => {
         res.status(400).send(e)
     })
 })
-
-mongoose.set('useFindAndModify', false)
 
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
@@ -108,6 +108,19 @@ app.patch('/todos/:id', (req, res) => {
         res.send({todo})
     }).catch((e) => {
         res.status(400).send()
+    })
+})
+
+app.post('/users', (req, res) => {
+    const body = _.pick(req.body, ['email', 'password'])
+    const user = new User(body)
+
+    user.save().then(() => {
+        return user.generateAuthToken()
+    }).then((token) => {
+        res.header('x-auth', token).send(user)
+    }).catch((e) => {
+        res.status(400).send(e)
     })
 })
 
