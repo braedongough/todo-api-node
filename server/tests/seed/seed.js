@@ -10,8 +10,10 @@ const {
     User
 } = require('./../../models/user')
 
+const salt = process.env.JWT_SECRET
 const userOneId = new ObjectID()
 const userTwoId = new ObjectID()
+
 const users = [{
     _id: userOneId,
     email: 'braedon@braedon.com',
@@ -21,7 +23,7 @@ const users = [{
         token: jwt.sign({
             _id: userOneId,
             access: 'auth'
-        }, 'abc123').toString()
+        }, salt).toString()
     }]
 }, {
     _id: userTwoId,
@@ -32,7 +34,7 @@ const users = [{
         token: jwt.sign({
             _id: userTwoId,
             access: 'auth'
-        }, 'abc123').toString()
+        }, salt).toString()
     }]
 }]
 
